@@ -14,7 +14,12 @@ public class Company {
                 return;
             }
         }
-        workersList.put(identy_key, new Workers(company, key, fname, sname, position, age, salary));
+        workersList.put(identy_key, new Workers.Builder(company, key, fname)
+                                .sname(sname)
+                                .position(position)
+                                .age(age)
+                                .salary(salary)
+                                .build());
     }
 
     public Map<Double, Workers> showListOfWorkersInSelectedCompany(String company){
@@ -107,6 +112,7 @@ public class Company {
                 if(person.getValue().key().equals(key)
                         && person.getValue().company().equals(company)){
                     workersList.remove(person.getKey());
+                    break;
                 } else {
                     System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
                 }
