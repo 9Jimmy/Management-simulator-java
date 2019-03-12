@@ -2,9 +2,9 @@ package com.jimmy9.management.backend;
 
 import java.util.*;
 
-public class Company {
+class Company {
 
-    Map<Double, Workers> workersList = new HashMap<Double, Workers>();
+    private Map<Double, Workers> workersList = new HashMap<Double, Workers>();
 
     void addWorker(String company, String key, String fname, String sname, String position, String age, String salary){
         double identy_key = Math.random()*100;
@@ -15,14 +15,14 @@ public class Company {
             }
         }
         workersList.put(identy_key, new Workers.Builder(company, key, fname)
-                                .sname(sname)
-                                .position(position)
-                                .age(age)
-                                .salary(salary)
-                                .build());
+                .sname(sname)
+                .position(position)
+                .age(age)
+                .salary(salary)
+                .build());
     }
 
-    public Map<Double, Workers> showListOfWorkersInSelectedCompany(String company){
+    void showListOfWorkersInSelectedCompany(String company){
         boolean containsCompany = false;
         for(Map.Entry<Double, Workers> personCompany : workersList.entrySet()){
             if(personCompany.getValue().company().equals(company)){
@@ -30,9 +30,8 @@ public class Company {
                 break;
             }
         }
-        if(containsCompany == false){
+        if(!containsCompany){
             System.out.printf("Company %s not found!", company);
-            return null;
         }
         System.out.printf("%s\n\n", company);
         for(Map.Entry<Double, Workers> person : workersList.entrySet()){
@@ -42,10 +41,9 @@ public class Company {
                         person.getValue().position(), person.getValue().age(), person.getValue().salary());
             }
         }
-        return workersList;
     }
 
-    public Workers findByKey(String key){
+    private Workers findByKey(String key){
         try{
             for(Map.Entry<Double, Workers> person : workersList.entrySet()){
                 if (person.getValue().key().equals(key)){
@@ -58,52 +56,47 @@ public class Company {
         return null;
     }
 
-    public Workers showSelectedWorker(String company, String key) {
+    void showSelectedWorker(String company, String key) {
         try {
             Workers selectedWorker = findByKey(key);
-            if (selectedWorker.company().equals(company)){
+            if (selectedWorker != null && selectedWorker.company().equals(company)){
                 System.out.printf("%s\n\n", company);
                 System.out.printf("|" + selectedWorker.key() + "|_" + "|FName: %s|_|SName: %s|_|Position: %s|_|Age: %s|_|Salary: %s| \n",
                         selectedWorker.fname(), selectedWorker.sname(),
                         selectedWorker.position(), selectedWorker.age(), selectedWorker.salary());
-                return selectedWorker;
             } else {
                 System.out.printf("Company %s not found!", company);
             }
         } catch (NullPointerException e) {
             System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
         }
-        return null;
     }
 
-    public Workers changeSalary(String company, String key, String value){
+    void changeSalary(String company, String key, String value){
         try {
             Workers selectedWorker = findByKey(key);
-            if(selectedWorker.company().equals(company)){
+            if(selectedWorker != null && selectedWorker.company().equals(company)){
                 selectedWorker.setSalary(value);
-                return selectedWorker;
             } else {
                 System.out.printf("Company %s not found!", company);
             }
         } catch (NullPointerException e) {
             System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
         }
-        return null;
     }
 
-    public Workers changePosition(String company, String key, String position){
+    void changePosition(String company, String key, String position){
         try{
             Workers selectedWorker = findByKey(key);
-            if (selectedWorker.company().equals(company)){
+            if (selectedWorker != null && selectedWorker.company().equals(company)){
                 selectedWorker.setPosition(position);
-                return selectedWorker;
+
             } else {
                 System.out.printf("Company %s not found!", company);
             }
         } catch (NullPointerException e) {
             System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
         }
-        return null;
     }
 
     void deleteWorker(String company, String key){
@@ -122,7 +115,7 @@ public class Company {
         } catch (ConcurrentModificationException e){}
     }
 
-    public void showListOfCompanies(){
+    void showListOfCompanies(){
         TreeSet<String> listOfCompanies = new TreeSet<String>();
         System.out.printf("List of companies: %n");
         for(Map.Entry<Double, Workers> companies : workersList.entrySet()){

@@ -3,7 +3,7 @@ package com.jimmy9.management.backend;
 import java.util.Scanner;
 
 public class consoleInterface {
-    Company companyObj = new Company();
+    private Company companyObj = new Company();
 
     public void start(){
         System.out.println("=====================Management-Simulator=====================\n\n\n");
@@ -11,7 +11,7 @@ public class consoleInterface {
         System.out.print("Enter 'info' to check information about app");
         boolean session = true;
 
-        while (session==true) {
+        while (session) {
             Scanner input = new Scanner(System.in);
             System.out.print("\n\n>>>");
             String i = input.nextLine();
@@ -112,8 +112,6 @@ public class consoleInterface {
 
                 if(confirm.equals("Y")){
                     companyObj.deleteWorker(company, key);
-                } else if(confirm.equals("N")){
-                    continue;
                 }
             }
 
@@ -122,7 +120,11 @@ public class consoleInterface {
             }
 
             else if(i.equals("exit")){
-                break;
+                session = false;
+            }
+
+            else{
+                System.out.printf("\nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
             }
         }
     }
