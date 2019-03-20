@@ -2,9 +2,9 @@ package com.jimmy9.management.backend;
 
 import java.util.Scanner;
 
-public class Commands {
-    Company companyObj = new Company();
-    Scanner input = new Scanner(System.in);
+ class Commands {
+    private Company companyObj = new Company();
+    private Scanner input = new Scanner(System.in);
 
      void info(){
         System.out.println("\n\t░░░░░░░█▐▓▓░████▄▄▄█▀▄▓▓▓▌█\n" +

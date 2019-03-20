@@ -3,8 +3,8 @@ package com.jimmy9.management.backend;
 import java.util.Scanner;
 
 public class consoleInterface {
-    Commands commands = new Commands();
-    Scanner input = new Scanner(System.in);
+    private Commands commands = new Commands();
+    private Scanner input = new Scanner(System.in);
 
     public void start(){
         System.out.println("=====================Management-Simulator=====================\n\n\n");
