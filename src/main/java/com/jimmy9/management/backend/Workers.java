@@ -69,31 +69,22 @@ class Workers{
         return key;
     }
 
-    String fname() {
-        return fname;
-    }
-
-    String sname() {
-        return sname;
-    }
-
-    String position() {
-        return position;
-    }
-
-    String age() {
-        return age;
-    }
-
-    String salary() {
-        return salary;
-    }
-
     void setSalary(String salary) {
         this.salary = salary;
     }
 
     void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "{key='" + key + '\'' +
+                ", fname='" + fname + '\'' +
+                ", sname='" + sname + '\'' +
+                ", position='" + position + '\'' +
+                ", age='" + age + '\'' +
+                ", salary='" + salary + '\'' +
+                '}';
     }
 }

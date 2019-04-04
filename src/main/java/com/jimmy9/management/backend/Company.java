@@ -4,17 +4,16 @@ import java.util.*;
 
 class Company {
 
-    private Map<Double, Workers> workersList = new HashMap<Double, Workers>();
+    private List<Workers> workersList = new ArrayList<>();
 
     void addWorker(String company, String key, String fname, String sname, String position, String age, String salary){
-        double identy_key = Math.random()*100;
-        for(Map.Entry<Double, Workers> personKey : workersList.entrySet()){
-            if(personKey.getValue().key().equals(key)){
+        for(Workers worker : workersList){
+            if(worker.key().equals(key)){
                 System.out.printf("\nEmployee with key %s already exists. Please enter another key.", key);
                 return;
             }
         }
-        workersList.put(identy_key, new Workers.Builder(company, key, fname)
+        workersList.add(new Workers.Builder(company, key, fname)
                 .sname(sname)
                 .position(position)
                 .age(age)
@@ -24,8 +23,8 @@ class Company {
 
     void showListOfWorkersInSelectedCompany(String company){
         boolean containsCompany = false;
-        for(Map.Entry<Double, Workers> personCompany : workersList.entrySet()){
-            if(personCompany.getValue().company().equals(company)){
+        for(Workers worker : workersList){
+            if(worker.company().equals(company)){
                 containsCompany = true;
                 break;
             }
@@ -34,20 +33,18 @@ class Company {
             System.out.printf("Company %s not found!", company);
         }
         System.out.printf("%s\n\n", company);
-        for(Map.Entry<Double, Workers> person : workersList.entrySet()){
-            if(person.getValue().company().equals(company)){
-                System.out.printf("|%s|_|FName: %s|_|SName: %s|_|Position: %s|_|Age: %s|_|Salary: %s| \n",
-                        person.getValue().key(), person.getValue().fname(), person.getValue().sname(),
-                        person.getValue().position(), person.getValue().age(), person.getValue().salary());
+        for(Workers worker : workersList){
+            if(worker.company().equals(company)){
+                System.out.println(worker);
             }
         }
     }
 
     private Workers findByKey(String key){
         try{
-            for(Map.Entry<Double, Workers> person : workersList.entrySet()){
-                if (person.getValue().key().equals(key)){
-                    return workersList.get(person.getKey());
+            for(Workers worker : workersList){
+                if (worker.key().equals(key)){
+                    return worker;
                 }
             }
         } catch (NullPointerException e) {
@@ -61,9 +58,7 @@ class Company {
             Workers selectedWorker = findByKey(key);
             if (selectedWorker != null && selectedWorker.company().equals(company)){
                 System.out.printf("%s\n\n", company);
-                System.out.printf("|" + selectedWorker.key() + "|_" + "|FName: %s|_|SName: %s|_|Position: %s|_|Age: %s|_|Salary: %s| \n",
-                        selectedWorker.fname(), selectedWorker.sname(),
-                        selectedWorker.position(), selectedWorker.age(), selectedWorker.salary());
+                System.out.println(selectedWorker);
             } else {
                 System.out.printf("Company %s not found!", company);
             }
@@ -101,10 +96,10 @@ class Company {
 
     void deleteWorker(String company, String key){
         try{
-            for(Map.Entry<Double, Workers> person : workersList.entrySet()){
-                if(person.getValue().key().equals(key)
-                        && person.getValue().company().equals(company)){
-                    workersList.remove(person.getKey());
+            for(Workers worker : workersList){
+                if(worker.key().equals(key)
+                        && worker.company().equals(company)){
+                    workersList.remove(worker);
                     break;
                 } else {
                     System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
@@ -118,9 +113,9 @@ class Company {
     void showListOfCompanies(){
         TreeSet<String> listOfCompanies = new TreeSet<String>();
         System.out.printf("List of companies: %n");
-        for(Map.Entry<Double, Workers> companies : workersList.entrySet()){
-            if(!listOfCompanies.contains(companies.getValue().company())){
-                listOfCompanies.add(companies.getValue().company());
+        for(Workers worker : workersList){
+            if(!listOfCompanies.contains(worker.company())){
+                listOfCompanies.add(worker.company());
             }
         }
         for(String company : listOfCompanies){

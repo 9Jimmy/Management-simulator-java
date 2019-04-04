@@ -17,30 +17,40 @@ public class consoleInterface {
 
             System.out.print("\n\n>>>");
             String i = input.nextLine();
-            if (i.equals("info")) {
-                commands.info();
-            } else if (i.equals("help")) {
-                commands.help();
-            } else if (i.equals("addW")) {
-                commands.addW();
-            } else if (i.equals("showAll")) {
-                commands.showAll();
-            } else if (i.equals("showS")) {
-                commands.showS();
-            } else if (i.equals("changeS")) {
-                commands.changeS();
-            } else if (i.equals("changeP")) {
-                commands.changeP();
-            } else if (i.equals("deleteW")) {
-                commands.deleteW();
-            } else if (i.equals("clist")) {
-                commands.clist();
-            } else if (i.equals("exit")) {
-                session = false;
-            } else {
-                System.out.printf("\nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
+            switch (i){
+                case "info":
+                    commands.info();
+                    break;
+                case "help":
+                    commands.help();
+                    break;
+                case "addW":
+                    commands.addW();
+                    break;
+                case "showAll":
+                    commands.showAll();
+                    break;
+                case "showS":
+                    commands.showS();
+                    break;
+                case "changeS":
+                    commands.changeS();
+                    break;
+                case "changeP":
+                    commands.changeP();
+                    break;
+                case "deleteW":
+                    commands.deleteW();
+                    break;
+                case "clist":
+                    commands.clist();
+                    break;
+                case "exit":
+                    session = false;
+                    break;
+                    default:
+                        System.out.printf("\nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
             }
         }
     }
 }
-
