@@ -1,125 +1,111 @@
 package com.jimmy9.management.backend;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.lang.System.out;
 
 class Company {
 
     private List<Workers> workersList = new ArrayList<>();
 
     void addWorker(String company, String key, String fname, String sname, String position, String age, String salary){
-        for(Workers worker : workersList){
-            if(worker.key().equals(key)){
-                System.out.printf("\nEmployee with key %s already exists. Please enter another key.", key);
-                return;
-            }
+        if(workersList.stream().filter(worker -> worker.key().equals(key)).count()<1) {
+            workersList.add(new Workers.Builder(company, key, fname)
+                    .sname(sname)
+                    .position(position)
+                    .age(age)
+                    .salary(salary)
+                    .build());
         }
-        workersList.add(new Workers.Builder(company, key, fname)
-                .sname(sname)
-                .position(position)
-                .age(age)
-                .salary(salary)
-                .build());
+        else {
+            out.printf("%nEmployee with key \'%s\' already exists. Please enter another key.", key);
+        }
     }
 
     void showListOfWorkersInSelectedCompany(String company){
-        boolean containsCompany = false;
-        for(Workers worker : workersList){
-            if(worker.company().equals(company)){
-                containsCompany = true;
-                break;
-            }
+        if(workersList.stream().filter(worker -> worker.company().equals(company)).count()<1){
+            out.printf("Company %s not found!", company);
         }
-        if(!containsCompany){
-            System.out.printf("Company %s not found!", company);
-        }
-        System.out.printf("%s\n\n", company);
-        for(Workers worker : workersList){
-            if(worker.company().equals(company)){
-                System.out.println(worker);
-            }
-        }
+        out.printf("%s%n%n", company);
+
+        workersList.stream()
+                .filter(worker -> worker.company().equals(company))
+                .forEach(out::println);
     }
 
     private Workers findByKey(String key){
         try{
-            for(Workers worker : workersList){
-                if (worker.key().equals(key)){
-                    return worker;
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out.printf("Employee with key %s not found", key);
+            return workersList.stream()
+                    .filter(worker -> worker.key().equals(key))
+                    .collect(Collectors.toList()).get(0);
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            out.printf("Employee with key \'%s\' not found%n", key);
         }
         return null;
     }
 
     void showSelectedWorker(String company, String key) {
+        //noinspection CatchMayIgnoreException
         try {
-            Workers selectedWorker = findByKey(key);
-            if (selectedWorker != null && selectedWorker.company().equals(company)){
-                System.out.printf("%s\n\n", company);
-                System.out.println(selectedWorker);
-            } else {
-                System.out.printf("Company %s not found!", company);
+            Workers a = findByKey(key);
+            //noinspection ConstantConditions
+            if (!a.company().equals(company)){
+                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
             }
-        } catch (NullPointerException e) {
-            System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
-        }
+            else {
+                out.println("\n" + a);
+            }
+        } catch (NullPointerException e) {}
     }
 
     void changeSalary(String company, String key, String value){
+        //noinspection CatchMayIgnoreException
         try {
-            Workers selectedWorker = findByKey(key);
-            if(selectedWorker != null && selectedWorker.company().equals(company)){
-                selectedWorker.setSalary(value);
-            } else {
-                System.out.printf("Company %s not found!", company);
+            Workers a = findByKey(key);
+            //noinspection ConstantConditions
+            if (!a.company().equals(company)){
+                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
             }
-        } catch (NullPointerException e) {
-            System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
-        }
+            else {
+                a.setSalary(value);
+            }
+        } catch (NullPointerException e) {}
     }
 
     void changePosition(String company, String key, String position){
-        try{
-            Workers selectedWorker = findByKey(key);
-            if (selectedWorker != null && selectedWorker.company().equals(company)){
-                selectedWorker.setPosition(position);
-
-            } else {
-                System.out.printf("Company %s not found!", company);
+        //noinspection CatchMayIgnoreException
+        try {
+            Workers a = findByKey(key);
+            //noinspection ConstantConditions
+            if (!a.company().equals(company)){
+                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
             }
-        } catch (NullPointerException e) {
-            System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
-        }
+            else {
+                a.setPosition(position);
+            }
+        } catch (NullPointerException e) {}
     }
 
     void deleteWorker(String company, String key){
-        try{
-            for(Workers worker : workersList){
-                if(worker.key().equals(key)
-                        && worker.company().equals(company)){
-                    workersList.remove(worker);
-                    break;
-                } else {
-                    System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
-                }
+        //noinspection CatchMayIgnoreException
+        try {
+            Workers a = findByKey(key);
+            //noinspection ConstantConditions
+            if (!a.company().equals(company)) {
+                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+            } else {
+                workersList.remove(a);
             }
-        } catch (NullPointerException e) {
-            System.out.printf("Employee with key %s in company %s not found!\n\n", key, company);
-        } catch (ConcurrentModificationException e){}
+        } catch (NullPointerException | ConcurrentModificationException e) {}
     }
 
     void showListOfCompanies(){
-        TreeSet<String> listOfCompanies = new TreeSet<String>();
-        System.out.printf("List of companies: %n");
-        for(Workers worker : workersList){
-            if(!listOfCompanies.contains(worker.company())){
-                listOfCompanies.add(worker.company());
-            }
+        if(workersList.stream().map(Workers::company).collect(Collectors.toList()).isEmpty()){
+            out.println("There is no companies!");
         }
-        for(String company : listOfCompanies){
-            System.out.println(company);
+        else{
+            workersList.stream().map(Workers::company).forEach(out::println);
         }
     }
 }
