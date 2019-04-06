@@ -64,11 +64,11 @@ class Commands {
 
      void help(){
         out.println("***************************************************************************");
-        out.println("*\tList of commands:                                                     *\n*" +
+        out.println("*\t                      List of commands                                *\n*" +
                 "                                                                         *\n" +
                 "*\t1)'addW'-Add new employee (If the specified company                   " +
                 "*                                                                         " +
-                "*\n*\tdoes not exist, a new one will be created with the specified name).   *\n" +
+                "\n*\tdoes not exist, a new one will be created with the specified name).   *\n" +
                 "*                                                                         " +
                 "*\n*\t2)'showAll'-show list of all employees in selected company.           *\n" +
                 "*                                                                         " +
