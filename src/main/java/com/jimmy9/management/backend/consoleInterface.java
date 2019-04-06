@@ -49,7 +49,7 @@ public class consoleInterface {
                     session = false;
                     break;
                     default:
-                        System.out.printf("\nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
+                        System.out.printf("%nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
             }
         }
     }

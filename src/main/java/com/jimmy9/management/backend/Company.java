@@ -10,7 +10,7 @@ class Company {
     private List<Workers> workersList = new ArrayList<>();
 
     void addWorker(String company, String key, String fname, String sname, String position, String age, String salary){
-        if(workersList.stream().filter(worker -> worker.key().equals(key)).count()<1) {
+        if(workersList.stream().noneMatch(worker -> worker.key().equals(key))) {
             workersList.add(new Workers.Builder(company, key, fname)
                     .sname(sname)
                     .position(position)
@@ -24,7 +24,7 @@ class Company {
     }
 
     void showListOfWorkersInSelectedCompany(String company){
-        if(workersList.stream().filter(worker -> worker.company().equals(company)).count()<1){
+        if(workersList.stream().noneMatch(worker -> worker.company().equals(company))){
             out.printf("Company %s not found!", company);
         }
         out.printf("%s%n%n", company);
