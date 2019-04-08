@@ -11,8 +11,7 @@ public enum  Colors {
         this.color = color;
     }
 
-    public String Color(){
+    public void Color(){
         System.out.println(color);
-        return color;
     }
 }
