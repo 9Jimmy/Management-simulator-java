@@ -3,6 +3,7 @@ package com.jimmy9.management.backend;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.jimmy9.management.design.Colors.*;
 import static java.lang.System.out;
 
 class Company {
@@ -19,19 +20,25 @@ class Company {
                     .build());
         }
         else {
+            RED.Color();
             out.printf("%nEmployee with key \'%s\' already exists. Please enter another key.", key);
+            RESET.Color();
         }
     }
 
     void showListOfWorkersInSelectedCompany(String company){
         if(workersList.stream().noneMatch(worker -> worker.company().equals(company))){
+            RED.Color();
             out.printf("Company %s not found!", company);
+            RESET.Color();
         }
+        BLUE.Color();
         out.printf("%s%n%n", company);
 
         workersList.stream()
                 .filter(worker -> worker.company().equals(company))
                 .forEach(out::println);
+        RESET.Color();
     }
 
     private Workers findByKey(String key){
@@ -40,7 +47,9 @@ class Company {
                     .filter(worker -> worker.key().equals(key))
                     .collect(Collectors.toList()).get(0);
         } catch (NullPointerException | IndexOutOfBoundsException e) {
+            RED.Color();
             out.printf("Employee with key \'%s\' not found%n", key);
+            RESET.Color();
         }
         return null;
     }
@@ -51,10 +60,14 @@ class Company {
             Workers a = findByKey(key);
             //noinspection ConstantConditions
             if (!a.company().equals(company)){
+                RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                RESET.Color();
             }
             else {
+                BLUE.Color();
                 out.println("\n" + a);
+                RESET.Color();
             }
         } catch (NullPointerException e) {}
     }
@@ -65,7 +78,9 @@ class Company {
             Workers a = findByKey(key);
             //noinspection ConstantConditions
             if (!a.company().equals(company)){
+                RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                RESET.Color();
             }
             else {
                 a.setSalary(value);
@@ -79,7 +94,9 @@ class Company {
             Workers a = findByKey(key);
             //noinspection ConstantConditions
             if (!a.company().equals(company)){
+                RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                RESET.Color();
             }
             else {
                 a.setPosition(position);
@@ -93,7 +110,9 @@ class Company {
             Workers a = findByKey(key);
             //noinspection ConstantConditions
             if (!a.company().equals(company)) {
+                RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                RESET.Color();
             } else {
                 workersList.remove(a);
             }
@@ -102,10 +121,14 @@ class Company {
 
     void showListOfCompanies(){
         if(workersList.stream().map(Workers::company).collect(Collectors.toList()).isEmpty()){
+            RED.Color();
             out.println("There is no companies!");
+            RESET.Color();
         }
         else{
+            BLUE.Color();
             workersList.stream().map(Workers::company).forEach(out::println);
+            RESET.Color();
         }
     }
 }

@@ -2,6 +2,9 @@ package com.jimmy9.management.backend;
 
 import java.util.Scanner;
 
+import static com.jimmy9.management.design.Colors.RED;
+import static com.jimmy9.management.design.Colors.RESET;
+
 public class consoleInterface {
     private Commands commands = new Commands();
     private Scanner input = new Scanner(System.in);
@@ -49,7 +52,9 @@ public class consoleInterface {
                     session = false;
                     break;
                     default:
+                        RED.Color();
                         System.out.printf("%nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
+                        RESET.Color();
             }
         }
     }

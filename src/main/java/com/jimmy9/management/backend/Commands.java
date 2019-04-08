@@ -2,6 +2,7 @@ package com.jimmy9.management.backend;
 
 import java.util.Scanner;
 
+import static com.jimmy9.management.design.Colors.*;
 import static java.lang.System.out;
 
 class Commands {
@@ -14,7 +15,9 @@ class Commands {
         String a = input.nextLine();
 
         while (a.equals("")){
+            RED.Color();
             out.println("Cannot be empty. Try again.");
+            RESET.Color();
             out.print("-> ");
             a = input.nextLine();
         }
@@ -48,6 +51,7 @@ class Commands {
     }
 
      void info(){
+         BLUE.Color();
         out.println("\n\t░░░░░░░█▐▓▓░████▄▄▄█▀▄▓▓▓▌█\n" +
                 "\t░░░░░▄█▌▀▄▓▓▄▄▄▄▀▀▀▄▓▓▓▓▓▌█\n" +
                 "\t░░░▄█▀▀▄▓█▓▓▓▓▓▓▓▓▓▓▓▓▀░▓▌█\n" +
@@ -60,9 +64,11 @@ class Commands {
                 "\t▌▓▓▓▄▄▀▀▓▓▓▀▓▓▓▓▓▓▓▓█▓█▓█▓▓▌█▌ \n" +
                 "\t█▐▓▓▓▓▓▓▄▄▄▓▓▓▓▓▓█▓█▓█▓█▓▓▓▐█\n");
         out.println("\tManagement-Simulator\n\tCreated by 9Jimmy\n\t03.03.2019");
+        RESET.Color();
     }
 
      void help(){
+        BLUE.Color();
         out.println("***************************************************************************");
         out.println("*\t                      List of commands                                *\n*" +
                 "                                                                         *\n" +
@@ -85,6 +91,7 @@ class Commands {
                 "*\n*\t8)'exit'-exit.                                                        *\n*" +
                 "                                                                         *");
         out.println("***************************************************************************");
+        RESET.Color();
     }
 
      void addW(){
