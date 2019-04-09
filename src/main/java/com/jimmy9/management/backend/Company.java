@@ -1,6 +1,9 @@
 package com.jimmy9.management.backend;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.jimmy9.management.design.Colors.*;
@@ -119,15 +122,21 @@ class Company {
         } catch (NullPointerException | ConcurrentModificationException e) {}
     }
 
+    static <T>Predicate<T> distinctByCompany(Function<? super T, ?> companyExtractor){
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(companyExtractor.apply(t));
+    }
+
     void showListOfCompanies(){
-        if(workersList.stream().map(Workers::company).collect(Collectors.toList()).isEmpty()){
+        if(new ArrayList<>(workersList).isEmpty()){
             RED.Color();
             out.println("There is no companies!");
             RESET.Color();
         }
         else{
             BLUE.Color();
-            workersList.stream().map(Workers::company).forEach(out::println);
+            workersList.stream().filter(distinctByCompany(Workers::company))
+                    .map(Workers::company).forEach(out::println);
             RESET.Color();
         }
     }
