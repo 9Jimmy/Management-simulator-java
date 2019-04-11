@@ -34,25 +34,26 @@ class Company {
             RED.Color();
             out.printf("Company %s not found!", company);
             RESET.Color();
-        }
-        BLUE.Color();
-        out.printf("%s%n%n", company);
+        } else {
+            BLUE.Color();
+            out.printf("%s%n%n", company);
 
-        workersList.stream()
-                .filter(worker -> worker.company().equals(company))
-                .forEach(out::println);
-        RESET.Color();
+            workersList.stream()
+                    .filter(worker -> worker.company().equals(company))
+                    .forEach(out::println);
+            RESET.Color();
+        }
     }
 
     private Workers findByKey(String key){
-        try{
-            return workersList.stream()
-                    .filter(worker -> worker.key().equals(key))
-                    .collect(Collectors.toList()).get(0);
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
+        if (workersList.stream().noneMatch(worker -> worker.key().equals(key))){
             RED.Color();
             out.printf("Employee with key \'%s\' not found%n", key);
             RESET.Color();
+        }
+        else {
+            return workersList.stream().filter(worker -> worker.key()
+                    .equals(key)).collect(Collectors.toList()).get(0);
         }
         return null;
     }
@@ -122,7 +123,7 @@ class Company {
         } catch (NullPointerException | ConcurrentModificationException e) {}
     }
 
-    static <T>Predicate<T> distinctByCompany(Function<? super T, ?> companyExtractor){
+    private static <T>Predicate<T> distinctByCompany(Function<? super T, ?> companyExtractor){
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(companyExtractor.apply(t));
     }

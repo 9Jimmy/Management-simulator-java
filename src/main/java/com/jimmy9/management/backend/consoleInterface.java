@@ -20,35 +20,35 @@ public class consoleInterface {
 
             System.out.print("\n\n>>>");
             String i = input.nextLine();
-            switch (i){
-                case "info":
+            switch (i.toUpperCase()){
+                case "INFO":
                     commands.info();
                     break;
-                case "help":
+                case "HELP":
                     commands.help();
                     break;
-                case "addW":
+                case "ADDW":
                     commands.addW();
                     break;
-                case "showAll":
+                case "SHOWALL":
                     commands.showAll();
                     break;
-                case "showS":
+                case "SHOWS":
                     commands.showS();
                     break;
-                case "changeS":
+                case "CHANGES":
                     commands.changeS();
                     break;
-                case "changeP":
+                case "CHANGEP":
                     commands.changeP();
                     break;
-                case "deleteW":
+                case "DELETEW":
                     commands.deleteW();
                     break;
-                case "clist":
+                case "CLIST":
                     commands.clist();
                     break;
-                case "exit":
+                case "EXIT":
                     session = false;
                     break;
                     default:
