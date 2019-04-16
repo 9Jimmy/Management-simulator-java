@@ -13,6 +13,11 @@ class Company {
 
     private List<Workers> workersList = new ArrayList<>();
 
+    /**
+     * Add new object 'Workers' with specified parameters in 'workersList'
+     *
+     * @param key - must be unique
+     * */
     void addWorker(String company, String key, String fname, String sname, String position, String age, String salary){
         if(workersList.stream().noneMatch(worker -> worker.key().equals(key))) {
             workersList.add(new Workers.Builder(company, key, fname)
@@ -29,6 +34,10 @@ class Company {
         }
     }
 
+    /**
+     * Prints to console all 'Workers' objects from 'workersList' where 'company' parameter are equal
+     *  to 'company' parameter from this method
+     * */
     void showListOfWorkersInSelectedCompany(String company){
         if(workersList.stream().noneMatch(worker -> worker.company().equals(company))){
             RED.Color();
@@ -45,42 +54,53 @@ class Company {
         }
     }
 
+    /**
+     * @return object 'Workers' from 'workersList' where 'key' parameter are equal to 'key' parameter
+     * from this method
+     * */
     private Workers findByKey(String key){
         if (workersList.stream().noneMatch(worker -> worker.key().equals(key))){
             RED.Color();
             out.printf("Employee with key \'%s\' not found%n", key);
             RESET.Color();
+            return null;
         }
         else {
-            return workersList.stream().filter(worker -> worker.key()
+            Workers wk =  workersList.stream().filter(worker -> worker.key()
                     .equals(key)).collect(Collectors.toList()).get(0);
+            assert wk != null;
+            return wk;
         }
-        return null;
     }
 
+    /**
+     * Prints to console object 'Workers' from 'workersList' where 'company' and 'key' parameters are
+     * equals to 'company' and 'key' parameters from this method
+     * */
     void showSelectedWorker(String company, String key) {
-        //noinspection CatchMayIgnoreException
-        try {
-            Workers a = findByKey(key);
-            //noinspection ConstantConditions
-            if (!a.company().equals(company)){
-                RED.Color();
-                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
-                RESET.Color();
-            }
-            else {
-                BLUE.Color();
-                out.println("\n" + a);
-                RESET.Color();
-            }
-        } catch (NullPointerException e) {}
+        Workers a = findByKey(key);
+        assert a != null;
+        if (!a.company().equals(company)){
+            RED.Color();
+            out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+            RESET.Color();
+        }
+        else {
+            BLUE.Color();
+            out.println("\n" + a);
+            RESET.Color();
+        }
     }
 
+    /**
+     * Changes 'salary' parameter to object 'Workers' from 'workersList' where 'company' and 'key'
+     * parameters are equals to 'company' and 'key' parameters from this method
+     *
+     * @param value - new value of 'salary' parameter
+     * */
     void changeSalary(String company, String key, String value){
-        //noinspection CatchMayIgnoreException
-        try {
             Workers a = findByKey(key);
-            //noinspection ConstantConditions
+            assert a != null;
             if (!a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
@@ -89,14 +109,17 @@ class Company {
             else {
                 a.setSalary(value);
             }
-        } catch (NullPointerException e) {}
     }
 
+    /**
+     * Changes 'position' parameter to object 'Workers' from 'workersList' where 'company' and 'key'
+     * parameters are equals to 'company' and 'key' parameters from this method
+     *
+     * @param position - new value of 'position' parameter
+     * */
     void changePosition(String company, String key, String position){
-        //noinspection CatchMayIgnoreException
-        try {
             Workers a = findByKey(key);
-            //noinspection ConstantConditions
+            assert a != null;
             if (!a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
@@ -105,14 +128,15 @@ class Company {
             else {
                 a.setPosition(position);
             }
-        } catch (NullPointerException e) {}
     }
 
+    /**
+     * Removes object 'Workers' from 'workersList' where 'company' and 'key' parameters are equals to
+     * 'company' and 'key' parameters from this method
+     * */
     void deleteWorker(String company, String key){
-        //noinspection CatchMayIgnoreException
-        try {
             Workers a = findByKey(key);
-            //noinspection ConstantConditions
+            assert a != null;
             if (!a.company().equals(company)) {
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
@@ -120,14 +144,19 @@ class Company {
             } else {
                 workersList.remove(a);
             }
-        } catch (NullPointerException | ConcurrentModificationException e) {}
     }
 
+    /**
+     * @return Set of objects without objects with similar specified parameters
+     * */
     private static <T>Predicate<T> distinctByCompany(Function<? super T, ?> companyExtractor){
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(companyExtractor.apply(t));
     }
 
+    /**
+     * Prints to console all list of 'company' parameters from 'workersList' without copies
+     * */
     void showListOfCompanies(){
         if(new ArrayList<>(workersList).isEmpty()){
             RED.Color();
