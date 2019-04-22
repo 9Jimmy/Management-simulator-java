@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.jimmy9.management.design.Colors.*;
 import static java.lang.System.out;
@@ -66,10 +65,10 @@ class Company {
             return null;
         }
         else {
-            Workers wk =  workersList.stream().filter(worker -> worker.key()
-                    .equals(key)).collect(Collectors.toList()).get(0);
-            assert wk != null;
-            return wk;
+            Optional<Workers> wk =  workersList.stream().filter(worker -> worker.key()
+                    .equals(key)).findFirst();
+
+            return wk.orElse(null);
         }
     }
 
@@ -79,8 +78,7 @@ class Company {
      * */
     void showSelectedWorker(String company, String key) {
         Workers a = findByKey(key);
-        assert a != null;
-        if (!a.company().equals(company)){
+        if (a == null || !a.company().equals(company)){
             RED.Color();
             out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
             RESET.Color();
@@ -100,8 +98,7 @@ class Company {
      * */
     void changeSalary(String company, String key, String value){
             Workers a = findByKey(key);
-            assert a != null;
-            if (!a.company().equals(company)){
+            if (a == null || !a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
@@ -119,8 +116,7 @@ class Company {
      * */
     void changePosition(String company, String key, String position){
             Workers a = findByKey(key);
-            assert a != null;
-            if (!a.company().equals(company)){
+            if (a == null || !a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
@@ -136,8 +132,7 @@ class Company {
      * */
     void deleteWorker(String company, String key){
             Workers a = findByKey(key);
-            assert a != null;
-            if (!a.company().equals(company)) {
+            if (a == null || !a.company().equals(company)) {
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
