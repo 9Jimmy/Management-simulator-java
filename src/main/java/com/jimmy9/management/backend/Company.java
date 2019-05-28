@@ -78,7 +78,7 @@ class Company {
      * */
     void showSelectedWorker(String company, String key) {
         Workers a = findByKey(key);
-        if (a == null || !a.company().equals(company)){
+        if (Objects.isNull(a) || !a.company().equals(company)){
             RED.Color();
             out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
             RESET.Color();
@@ -98,7 +98,7 @@ class Company {
      * */
     void changeSalary(String company, String key, String value){
             Workers a = findByKey(key);
-            if (a == null || !a.company().equals(company)){
+            if (Objects.isNull(a) || !a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
@@ -116,7 +116,7 @@ class Company {
      * */
     void changePosition(String company, String key, String position){
             Workers a = findByKey(key);
-            if (a == null || !a.company().equals(company)){
+            if (Objects.isNull(a) || !a.company().equals(company)){
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
@@ -132,7 +132,7 @@ class Company {
      * */
     void deleteWorker(String company, String key){
             Workers a = findByKey(key);
-            if (a == null || !a.company().equals(company)) {
+            if (Objects.isNull(a) || !a.company().equals(company)) {
                 RED.Color();
                 out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
                 RESET.Color();
@@ -153,7 +153,7 @@ class Company {
      * Prints to console all list of 'company' parameters from 'workersList' without copies
      * */
     void showListOfCompanies(){
-        if(new ArrayList<>(workersList).isEmpty()){
+        if(workersList.isEmpty()){
             RED.Color();
             out.println("There is no companies!");
             RESET.Color();
