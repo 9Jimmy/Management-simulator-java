@@ -153,7 +153,7 @@ class Commands {
         checkStringValue("key");
         out.print("\nAre you sure? (Y/N): ");
         String confirm = input.nextLine();
-        if (confirm.equals("Y")) {
+        if (confirm.toUpperCase().equals("Y")) {
             companyObj.deleteWorker(company, key);
         }
     }

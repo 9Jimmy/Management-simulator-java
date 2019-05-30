@@ -8,8 +8,12 @@ import java.util.function.Predicate;
 import static com.jimmy9.management.design.Colors.*;
 import static java.lang.System.out;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 class Company {
 
+    private final Logger logger = LoggerFactory.getLogger(Company.class);
     private List<Workers> workersList = new ArrayList<>();
 
     /**
@@ -28,7 +32,7 @@ class Company {
         }
         else {
             RED.Color();
-            out.printf("%nEmployee with key \'%s\' already exists. Please enter another key.", key);
+            logger.error("\nEmployee with key \'{}\' already exists. Please enter another key.", key);
             RESET.Color();
         }
     }
@@ -40,7 +44,7 @@ class Company {
     void showListOfWorkersInSelectedCompany(String company){
         if(workersList.stream().noneMatch(worker -> worker.company().equals(company))){
             RED.Color();
-            out.printf("Company %s not found!", company);
+            logger.error("Company \'{}\' not found!", company);
             RESET.Color();
         } else {
             BLUE.Color();
@@ -60,7 +64,7 @@ class Company {
     private Workers findByKey(String key){
         if (workersList.stream().noneMatch(worker -> worker.key().equals(key))){
             RED.Color();
-            out.printf("Employee with key \'%s\' not found%n", key);
+            logger.error("Employee with key \'{}\' not found\n", key);
             RESET.Color();
             return null;
         }
@@ -80,7 +84,7 @@ class Company {
         Workers a = findByKey(key);
         if (Objects.isNull(a) || !a.company().equals(company)){
             RED.Color();
-            out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+            logger.error("Employee with key \'{}\' in company \'{}\' not found!\n\n", key, company);
             RESET.Color();
         }
         else {
@@ -100,7 +104,7 @@ class Company {
             Workers a = findByKey(key);
             if (Objects.isNull(a) || !a.company().equals(company)){
                 RED.Color();
-                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                logger.error("Employee with key \'{}\' in company \'{}\' not found!\n\n", key, company);
                 RESET.Color();
             }
             else {
@@ -118,7 +122,7 @@ class Company {
             Workers a = findByKey(key);
             if (Objects.isNull(a) || !a.company().equals(company)){
                 RED.Color();
-                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                logger.error("Employee with key \'{}\' in company \'{}\' not found!\n\n", key, company);
                 RESET.Color();
             }
             else {
@@ -134,7 +138,7 @@ class Company {
             Workers a = findByKey(key);
             if (Objects.isNull(a) || !a.company().equals(company)) {
                 RED.Color();
-                out.printf("Employee with key \'%s\' in company \'%s\' not found!%n%n", key, company);
+                logger.error("Employee with key \'{}\' in company \'{}\' not found!\n\n", key, company);
                 RESET.Color();
             } else {
                 workersList.remove(a);
@@ -155,7 +159,7 @@ class Company {
     void showListOfCompanies(){
         if(workersList.isEmpty()){
             RED.Color();
-            out.println("There is no companies!");
+            logger.error("There is no companies!");
             RESET.Color();
         }
         else{

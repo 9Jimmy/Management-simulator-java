@@ -1,5 +1,8 @@
 package com.jimmy9.management.backend;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 import static com.jimmy9.management.design.Colors.RED;
@@ -8,9 +11,11 @@ import static com.jimmy9.management.design.Colors.RESET;
 public class consoleInterface {
     private Commands commands = new Commands();
     private Scanner input = new Scanner(System.in);
+    private final Logger logger = LoggerFactory.getLogger(Company.class);
+
 
     public void start(){
-        System.out.println("=====================Management-Simulator=====================\n\n\n");
+        System.out.println("\n=====================Management-Simulator=====================\n\n\n");
         System.out.print("\nEnter 'help' to check commands\n");
         System.out.print("Enter 'info' to check information about app");
 
@@ -53,7 +58,7 @@ public class consoleInterface {
                     break;
                     default:
                         RED.Color();
-                        System.out.printf("%nUnknown command \'%s\' enter \'help\' to check list of commands.", i);
+                        logger.error("\nUnknown command \'{}\' enter \'help\' to check list of commands.", i);
                         RESET.Color();
             }
         }
